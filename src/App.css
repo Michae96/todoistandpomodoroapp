@@ -1,0 +1,63 @@
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+.timer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.time-display {
+  font-size: 2em;
+  margin: 10px 0;
+}
+
+.timer-controls button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.task-item.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-controls button {
+  margin-left: 5px;
+}
+
+.task-form {
+  margin-top: 20px;
+}
+
+.task-form input {
+  padding: 10px;
+  font-size: 1em;
+  width: 70%;
+}
+
+.task-form button {
+  padding: 10px 20px;
+  font-size: 1em;
+}
