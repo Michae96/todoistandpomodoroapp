@@ -13,6 +13,8 @@ const App: React.FC = () => {
   const [isWorking, setIsWorking] = useState<boolean>(true);
   const [timeLeft, setTimeLeft] = useState<number>(25 * 60);
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filterStatus, setFilterStatus] = useState<'all' | 'completed' | 'incomplete'>('all');
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -83,9 +85,23 @@ const App: React.FC = () => {
     setTimeLeft(25 * 60);
   };
 
+  const toggleTimerMode = () => {
+    setIsWorking((prev) => !prev);
+    setTimeLeft((prev) => (prev === 25 * 60 ? 5 * 60 : 25 * 60));
+  };
+
   const selectTask = (id: string) => {
     setCurrentTaskId(id);
   };
+
+  const filteredTasks = tasks.filter((task) => {
+    const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus =
+      filterStatus === 'all' ||
+      (filterStatus === 'completed' && task.completed) ||
+      (filterStatus === 'incomplete' && !task.completed);
+    return matchesSearch && matchesStatus;
+  });
 
   const currentTask = tasks.find((task) => task.id === currentTaskId);
 
@@ -93,8 +109,24 @@ const App: React.FC = () => {
     <div className="app">
       <h1>To-Do List with Pomodoro Timer</h1>
       <TaskForm addTask={addTask} />
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Поиск задач"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value as 'all' | 'completed' | 'incomplete')}
+        >
+          <option value="all">Все</option>
+          <option value="completed">Выполненные</option>
+          <option value="incomplete">Невыполненные</option>
+        </select>
+      </div>
       <TaskList
-        tasks={tasks}
+        tasks={filteredTasks}
         editTask={editTask}
         deleteTask={deleteTask}
         toggleTaskStatus={toggleTaskStatus}
@@ -106,6 +138,8 @@ const App: React.FC = () => {
         startTimer={startTimer}
         pauseTimer={pauseTimer}
         resetTimer={resetTimer}
+        toggleTimerMode={toggleTimerMode}
+        isWorking={isWorking}
         currentTask={currentTask}
       />
     </div>

@@ -61,3 +61,20 @@ h1 {
   padding: 10px 20px;
   font-size: 1em;
 }
+
+.filters {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.filters input {
+  padding: 10px;
+  font-size: 1em;
+  flex: 1;
+}
+
+.filters select {
+  padding: 10px;
+  font-size: 1em;
+}

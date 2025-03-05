@@ -7,10 +7,21 @@ interface TimerProps {
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
+  toggleTimerMode: () => void;
+  isWorking: boolean;
   currentTask: { id: string; title: string; completed: boolean } | undefined;
 }
 
-const Timer: React.FC<TimerProps> = ({ timeLeft, isRunning, startTimer, pauseTimer, resetTimer, currentTask }) => {
+const Timer: React.FC<TimerProps> = ({
+  timeLeft,
+  isRunning,
+  startTimer,
+  pauseTimer,
+  resetTimer,
+  toggleTimerMode,
+  isWorking,
+  currentTask,
+}) => {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
@@ -28,6 +39,9 @@ const Timer: React.FC<TimerProps> = ({ timeLeft, isRunning, startTimer, pauseTim
           Пауза
         </button>
         <button onClick={resetTimer}>Рефреш</button>
+        <button onClick={toggleTimerMode}>
+          {isWorking ? 'Переключить на отдых' : 'Переключить на работу'}
+        </button>
       </div>
       {currentTask && (
         <div className="current-task">
